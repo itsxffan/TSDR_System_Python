@@ -38,3 +38,10 @@ class TSDR_Model:
         model.add(MaxPooling2D(pool_size=(2, 2)))
 
         # Second Set: ((CONV >> RELU >> CONV >> RELU)) * 2 >> POOL
+        model.add(Conv2D(32, (3, 3), padding="same"))
+        model.add(Activation("relu"))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(Conv2D(32, (3, 3), padding="same"))
+        model.add(Activation("relu"))
+        model.add(BatchNormalization(axis=chanDim))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
