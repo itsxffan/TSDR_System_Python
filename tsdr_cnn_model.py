@@ -19,5 +19,8 @@ class TSDR_Model:
     @staticmethod
     def build_model(width, height, depth, classes):
         cnnModel = Sequential()
-        inputShape = (height, width, depth)
-        channelDim = -1
+        shapeInput = (height, width, depth)
+        channelDimension = -1
+
+        # CNN Layer 1:
+        model.add(Conv2D(8, (5, 5)), padding="same", input_shape=shapeInput))
