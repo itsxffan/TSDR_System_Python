@@ -23,4 +23,4 @@ class TSDR_Model:
         channelDimension = -1
 
         # CNN Layer 1:
-        model.add(Conv2D(8, (5, 5)), padding="same", input_shape=shapeInput))
+        model.add(Conv2D(8, (5, 5), padding="same", input_shape=shapeInput))
