@@ -22,13 +22,13 @@ class TSDR_Model:
         shapeInput = (height, width, depth)
         channelDimension = -1
 
-        # CNN Layer 1: CONV >> RELU >> BN >> POOL
+        # CNN Layer 1: CONV >> RELU (default acitivation function that shoots the neuron) >> BN >> POOL
         model.add(Conv2D(8, (5, 5), padding="same", input_shape=shapeInput))
         model.add(Activation("relu"))
         model.add(BatchNormalization(axis=channelDimension))
         model.add(MaxPooling2D(pool_size=2, 2))
 
-        # First Set: ((CONV >> RELU >> CONV >> RELU)) * 2 >> POOL
+        # First Set: ((CONV >> RELU (default acitivation function that shoots the neuron) >> CONV >> RELU)) * 2 >> POOL
         model.add(Conv2D(16, (3, 3), padding="same"))
         model.add(Activation("relu"))
         model.add(BatchNormalization(axis=chanDim))
@@ -37,7 +37,7 @@ class TSDR_Model:
         model.add(BatchNormalization(axis=chanDim))
         model.add(MaxPooling2D(pool_size=(2, 2)))
 
-        # Second Set: ((CONV >> RELU >> CONV >> RELU)) * 2 >> POOL
+        # Second Set: ((CONV >> RELU (default acitivation function that shoots the neuron) >> CONV >> RELU)) * 2 >> POOL
         model.add(Conv2D(32, (3, 3), padding="same"))
         model.add(Activation("relu"))
         model.add(BatchNormalization(axis=chanDim))
