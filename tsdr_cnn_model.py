@@ -2,7 +2,7 @@
 
 # Import all the required packages.
 
-#
+# CNN model will be based upon the Sequential API.
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import MaxPooling2D
