@@ -1,6 +1,8 @@
 # Author - Saffan Ahmed
 
-# Import all the required packages
+# Import all the required packages.
+
+#
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import MaxPooling2D
