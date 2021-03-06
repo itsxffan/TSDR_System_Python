@@ -16,7 +16,7 @@ Goals for this script:
 """
 
 # Import all the required packages.
-from TrafficSignSearch.tsdr_cnn_model import TSDR_Model
+from TrafficSignSearch.tsdr_cnn_model import TSDR_CNN_Model
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.utils import to_categorical
