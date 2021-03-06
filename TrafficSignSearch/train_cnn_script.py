@@ -28,6 +28,12 @@ from skimage import exposure
 from skimage import io
 from skimage import transform
 
+import matplotlib.pyplot as plplt
+import random as rd
+import numpy as np
+import argparse as ap
+import os
+
 # Set matplotlib Backend so numerical values can be stored on local disk.
 import matplotlib
 matplotlib.use("Agg")
