@@ -38,9 +38,8 @@ import os
 import matplotlib
 matplotlib.use("Agg")
 
+
 # Loading data from disk
-
-
 def load_tsdr_data(baseDir, csvDir):
     ts_data = []
     ts_label = []
