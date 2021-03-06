@@ -14,3 +14,7 @@ Goals for this script:
 5 - Store the CNN model to personal computer disk-space to make predictions for new Traffic Sign Inputs.
 
 """
+
+# Set matplotlib Backend so numerical values can be stored on local disk.
+import matplotlib as mpl
+mpl.use("Agg")
