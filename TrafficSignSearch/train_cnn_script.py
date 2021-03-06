@@ -16,15 +16,20 @@ Goals for this script:
 """
 
 # Set matplotlib Backend so numerical values can be stored on local disk.
-from skimage import transform
-from skimage import io
-from skimage import exposure
-from sklearn.metrics import classification_report
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from TrafficSignSearch.tsdr_cnn_model import TSDR_Model
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.optimizers import Adam
+
+from sklearn.metrics import classification_report
+
+from skimage import exposure
+from skimage import io
+from skimage import transform
+
 import matplotlib
 matplotlib.use("Agg")
+
 
 # Import all the required packages.
