@@ -37,3 +37,15 @@ import os
 # Set matplotlib Backend so numerical values can be stored on local disk.
 import matplotlib
 matplotlib.use("Agg")
+
+# Loading data from disk
+
+
+def load_tsdr_data(baseDir, csvDir):
+    ts_data = []
+    ts_label = []
+
+    data_rows = open(csvDir).read().strip().split("\n")[1:]
+    random.shuffle(data_rows)
+
+    print(data_rows[:3])
