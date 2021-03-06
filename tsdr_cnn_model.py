@@ -52,15 +52,17 @@ class TSDR_Model:
         model.add(Activation("relu"))
         model.add(BatchNormalization())
         model.add(Dropout(0.5))
+
         # Second Set of Fully Connected >> RELU (default acitivation function that shoots the neuron) layers
         model.add(Flatten())
         model.add(Dense(128))
         model.add(Activation("relu"))
         model.add(BatchNormalization())
         model.add(Dropout(0.5))
+
         # SoftMax Classfifiers
         model.add(Dense(classes))
         model.add(Activation("softmax"))
-        # return the constructed network architecture
 
+        # Return the Model: CNN Network Architecture that has been constructed
         return model
