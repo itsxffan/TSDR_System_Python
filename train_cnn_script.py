@@ -48,3 +48,6 @@ def load_tsdr_data(baseDir, csvDir):
     random.shuffle(data_rows)
 
     print(data_rows[:3])
+
+
+print("Hello")

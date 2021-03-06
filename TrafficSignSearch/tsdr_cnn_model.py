@@ -25,7 +25,7 @@ class TSDR_CNN_Model:
         cnnModel.add(Conv2D(8, (5, 5), padding="same", input_shape=shapeInput))
         cnnModel.add(Activation("relu"))
         cnnModel.add(BatchNormalization(axis=channelDimension))
-        cnnModel.add(MaxPooling2D(pool_size=2, 2))
+        cnnModel.add(MaxPooling2D(pool_size=(2, 2)))
 
         # First Set: ((CONV >> RELU (default acitivation function that shoots the neuron) >> CONV >> RELU)) * 2 >> POOL
         cnnModel.add(Conv2D(16, (3, 3), padding="same"))
