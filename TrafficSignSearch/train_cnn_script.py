@@ -15,7 +15,7 @@ Goals for this script:
 
 """
 
-# Set matplotlib Backend so numerical values can be stored on local disk.
+# Import all the required packages.
 from TrafficSignSearch.tsdr_cnn_model import TSDR_Model
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -28,8 +28,6 @@ from skimage import exposure
 from skimage import io
 from skimage import transform
 
+# Set matplotlib Backend so numerical values can be stored on local disk.
 import matplotlib
 matplotlib.use("Agg")
-
-
-# Import all the required packages.
