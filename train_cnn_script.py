@@ -76,3 +76,14 @@ def load_tsdr_data(baseDir, csvDir):
       # Return a tuple of the Image Data (Pixels) and Image Labels
       return (ts_data, ts_label)
 
+      # construct the argument parser and parse the arguments
+      argp = ap.ArgumentParser()
+      argp.add_argument("-d", "--dataset", required=True,
+        help="path to input TSDR Dataset")
+      argp.add_argument("-m", "--model", required=True,
+        help="path to Output Model")
+      argp.add_argument("-p", "--plot", type=str, default="plot.png",
+        help="path to Training History Plot")
+      args = vars(argp.parse_args())
+      
+
