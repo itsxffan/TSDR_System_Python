@@ -47,7 +47,14 @@ def load_tsdr_data(baseDir, csvDir):
     data_rows = open(csvDir).read().strip().split("\n")[1:]
     random.shuffle(data_rows)
 
-    print(data_rows[:3])
-
-
-print("Saffan")
+    # loop over the rows of the CSV file
+      for (i, row) in enumerate(rows):
+           # check to see if we should show a status update
+           if i > 0 and i % 1000 == 0:
+                print("[INFO] processed {} total images".format(i))
+            # split the row into components and then grab the class ID
+            # and image path
+            (label, imagePath) = row.strip().split(",")[-2:]
+            # derive the full path to the image file and load it
+            imagePath = os.path.sep.join([basePath, imagePath])
+            image = io.imread(imagePath)
