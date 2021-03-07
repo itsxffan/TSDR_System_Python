@@ -76,7 +76,7 @@ def load_tsdr_data(baseDir, csvDir):
       # Return a tuple of the Image Data (Pixels) and Image Labels
       return (ts_data, ts_label)
 
-      # construct the argument parser and parse the arguments
+      # Construct the argument parser and parse the arguments
       argp = ap.ArgumentParser()
       argp.add_argument("-d", "--dataset", required=True,
         help="path to input TSDR Dataset")
@@ -84,6 +84,39 @@ def load_tsdr_data(baseDir, csvDir):
         help="path to Output Model")
       argp.add_argument("-p", "--plot", type=str, default="plot.png",
         help="path to Training History Plot")
-      args = vars(argp.parse_args())
-      
+      parseArg = vars(argp.parse_args())
 
+      # initialize the number of epochs to train for, base learning rate,
+      # and batch size
+      No_Of_Epochs = 30
+      Initial_LR = 1e-3
+      Batch_Size = 64
+
+      # load the label names
+      TrafficSignLabelNames = open("TrafficSignNames.csv").read().strip().split("\n")[1:]
+      TrafficSignLabelNames = [l.split(",")[1] for l in TrafficSignLabelNames]
+
+      # Load and Pre-Processing of the Traffic Sign Data:
+      # Return the path to the training and testing CSV files
+      train_path_dir = os.path.sep.join([parseArg["dataset"], "TSDR_Training.csv"])
+      test_path_dir = os.path.sep.join([parseArg["dataset"], "TSDR_Test.csv"])
+
+      # Load the training and testing data
+      print("[INFO] Loading training and testing data...")
+      (train_x_value, train_y_value) = load_tsdr_data(parseArg["dataset"], train_path_dir)
+      (test_x_value, test_y_value) = load_tsdr_data(parseArg["dataset"], test_path_dir)
+
+      # Scale data to the range of [0, 1]
+      train_x_value = train_x_value.astype("float32") / 255.0
+      test_x_value = test_x_value.astype("float32") / 255.0
+
+      # one-hot encode the training and testing labels
+      num_labels = len(np.unique(train_y_value))
+      train_y_value = to_categorical(train_y_value, num_labels))
+      test_y_value = to_categorical(test_y_value, num_labels)
+
+      # account for skew in the labeled data
+      TSDR_Class_Sum = train_y_value.sum(axis=0)
+      TSDR_Class_Weight = TSDR_Class_Sum.max() / TSDR_Class_Sum
+
+      
