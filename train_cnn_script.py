@@ -48,13 +48,29 @@ def load_tsdr_data(baseDir, csvDir):
     random.shuffle(data_rows)
 
     # loop over the rows of the CSV file
-      for (i, row) in enumerate(rows):
+      for (x, data_row) in enumerate(data_row):
            # check to see if we should show a status update
-           if i > 0 and i % 1000 == 0:
+           if x > 0 and x % 1000 == 0:
                 print("[INFO] processed {} total images".format(i))
             # split the row into components and then grab the class ID
             # and image path
-            (label, imagePath) = row.strip().split(",")[-2:]
-            # derive the full path to the image file and load it
-            imagePath = os.path.sep.join([basePath, imagePath])
-            image = io.imread(imagePath)
+            (ts_label, imageDir) = data_row.strip().split(",")[-2:]
+            # Derive the full directory of the image file and load it
+            imageDir = os.path.sep.join([baseDir, imageDir])
+            trafficSignImage = io.imread(imagePath)
+
+            # resize the image to be 32x32 pixels, ignoring aspect ratio,
+            # and then perform Contrast Limited Adaptive Histogram
+            # Equalization (CLAHE)
+            trafficSignImage = transform.resize(trafficSignImage, (32, 32))
+            trafficSignImage = exposure.equalize_adapthist(trafficSignImage, clip_limit=0.1)
+            # update the list of data and labels, respectively
+            ts_data.append(trafficSignImage)
+            ts_label.append(int(ts_label))
+
+        # Convert the Image Data (Pixels) and Image Labels into Numpy Array's
+        ts_data = np.array(ts_data)
+        ts_label = np.array(ts_label)
+
+        # return a tuple of the data and labels
+        return (data, labels)
