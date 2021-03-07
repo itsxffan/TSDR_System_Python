@@ -119,4 +119,55 @@ def load_tsdr_data(baseDir, csvDir):
       TSDR_Class_Sum = train_y_value.sum(axis=0)
       TSDR_Class_Weight = TSDR_Class_Sum.max() / TSDR_Class_Sum
 
+      # Constructing Image Generator For Data Augmentation
+      data_augmentation = ImageDataGenerator(
+        rotation_range=10,
+        zoom_range=0.15,
+        width_shift_range=0.1,
+        height_shift_range=0.1,
+        shear_range=0.15,
+        horizontal_flip=False,
+        vertical_flip=False,
+        fill_mode="nearest")
+
+      # Initialize The Optimizer and Compile the Model
+      print("[INFO] Compiling Model...")
+      opt_model = Adam(lr=Initial_LR, decay=Initial_LR / (No_Of_Epochs * 0.5))
+      compile_model = TSDR_CNN_Model.build(width=32, height=32, depth=3,
+        classes=num_labels)
+      compile_model.compile(loss="categorical_crossentropy", optimizer=opt_model,
+        metrics=["accuracy"])
+
+      # Train the Network
+      print("[INFO] training network...")
+      H = compile_model.fit_generator(
+        data_augmentation.flow(train_x_value, train_y_value, batch_size=BS),
+        validation_data=(test_x_value, test_y_value),
+        steps_per_epoch=train_x_value.shape[0] // BS,
+        epochs=No_Of_Epochs,
+        class_weight=TSDR_Class_Weight,
+        verbose=1)
       
+      # Evaluate the Network
+      print("[INFO] evaluating network...")
+      CNN_Predictions = compile_model.predict(test_x_value, batch_size=BS)
+      print(classification_report(test_y_value.argmax(axis=1),
+        CNN_Predictions.argmax(axis=1), target_names=TrafficSignLabelNames))
+
+      # Save the CNN Model to Local Machine
+      print("[INFO] serializing network to '{}'...".format(args["model"]))
+      compile_model.save(args["model"])
+
+      # Plot the Training Loss and Accuracy
+      N = np.arange(0, No_Of_Epochs)
+      plpt.style.use("ggplot")
+      plpt.figure()
+      plpt.plot(N, H.history["loss"], label="train_loss")
+      plpt.plot(N, H.history["val_loss"], label="val_loss")
+      plpt.plot(N, H.history["accuracy"], label="train_acc")
+      plpt.plot(N, H.history["val_accuracy"], label="val_acc")
+      plpt.title("Training Loss and Accuracy on Dataset")
+      plpt.xlabel("Epoch #")
+      plpt.ylabel("Loss/Accuracy")
+      plpt.legend(loc="lower left")
+      plpt.savefig(args["plot"])
